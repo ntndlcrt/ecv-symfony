@@ -24,9 +24,13 @@ class Tag
     #[ORM\ManyToMany(targetEntity: TagCategory::class, inversedBy: 'tags')]
     private Collection $tag_category;
 
+    #[ORM\ManyToMany(targetEntity: Gift::class, mappedBy: 'tags')]
+    private Collection $gifts;
+
     public function __construct()
     {
         $this->tag_category = new ArrayCollection();
+        $this->gifts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,6 +82,33 @@ class Tag
     public function removeTagCategoryId(TagCategory $tagCategoryId): self
     {
         $this->tag_category->removeElement($tagCategoryId);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gift>
+     */
+    public function getGifts(): Collection
+    {
+        return $this->gifts;
+    }
+
+    public function addGift(Gift $gift): self
+    {
+        if (!$this->gifts->contains($gift)) {
+            $this->gifts->add($gift);
+            $gift->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGift(Gift $gift): self
+    {
+        if ($this->gifts->removeElement($gift)) {
+            $gift->removeTag($this);
+        }
 
         return $this;
     }
