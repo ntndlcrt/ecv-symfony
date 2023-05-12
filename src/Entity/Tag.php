@@ -22,11 +22,11 @@ class Tag
     private ?string $title = null;
 
     #[ORM\ManyToMany(targetEntity: TagCategory::class, inversedBy: 'tags')]
-    private Collection $tag_category_id;
+    private Collection $tag_category;
 
     public function __construct()
     {
-        $this->tag_category_id = new ArrayCollection();
+        $this->tag_category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,13 +63,13 @@ class Tag
      */
     public function getTagCategoryId(): Collection
     {
-        return $this->tag_category_id;
+        return $this->tag_category;
     }
 
     public function addTagCategoryId(TagCategory $tagCategoryId): self
     {
-        if (!$this->tag_category_id->contains($tagCategoryId)) {
-            $this->tag_category_id->add($tagCategoryId);
+        if (!$this->tag_category->contains($tagCategoryId)) {
+            $this->tag_category->add($tagCategoryId);
         }
 
         return $this;
@@ -77,7 +77,7 @@ class Tag
 
     public function removeTagCategoryId(TagCategory $tagCategoryId): self
     {
-        $this->tag_category_id->removeElement($tagCategoryId);
+        $this->tag_category->removeElement($tagCategoryId);
 
         return $this;
     }
