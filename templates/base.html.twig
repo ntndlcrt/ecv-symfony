@@ -14,6 +14,21 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+             <nav>
+                {% include 'navigation/navigation.html.twig' %} 
+            </nav>
+
+            <div class="content">
+                {% block content %}
+                    <h3>contenu de la page </h3>
+                {% endblock %}
+            </div>
+
+            <footer>
+                <p>© 2023 - un super projet conçu par Maude et Antoine</p>
+            </footer>
+
+        {% endblock %}
     </body>
 </html>
