@@ -13,11 +13,7 @@ class HomeController extends AbstractController
      */
     public function home(): Response
     {
-<<<<<<< HEAD
        return $this->render('base.html.twig', [
-=======
-        return $this->render('base.html.twig', [
->>>>>>> develop
             'name' => 'Yourkdo',
         ]);
     }
