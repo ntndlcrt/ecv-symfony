@@ -1,4 +1,10 @@
 {% extends 'base.html.twig' %}
+{% block meta %}
+    {% do ({
+        'name': 'description',
+        'content': 'Inscription'
+    }) %}
+{% endblock %}
 
 {% block title %}Inscription{% endblock %}
 

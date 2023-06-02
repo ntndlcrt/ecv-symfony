@@ -1,4 +1,10 @@
 {% extends 'base.html.twig' %}
+{% block meta %}
+    {% do ({
+        'name': 'description',
+        'content': 'Connexion'
+    }) %}
+{% endblock %}
 
 {% block title %}Connexion{% endblock %}
 
