@@ -39,28 +39,51 @@ class GiftRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Gift[] Returns an array of Gift objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('g.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Gift[] Returns an array of Gift objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('g')
+    //            ->andWhere('g.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('g.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Gift
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Gift
+    //    {
+    //        return $this->createQueryBuilder('g')
+    //            ->andWhere('g.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
+
+    public function findMatchingGifts(array $formData)
+    {
+        $queryBuilder = $this->createQueryBuilder('g')
+            ->andWhere('g.price <= :price')
+            ->setParameter('price', $formData['price'])
+            ->orderBy('g.price', 'ASC');
+
+        if ($formData['gender'] !== 'none') {
+            $queryBuilder
+                ->andWhere('g.gender = :gender')
+                ->setParameter('gender', $formData['gender']);
+        }
+
+        if (!empty($formData['tags'])) {
+            $queryBuilder
+                ->join('g.tags', 't')
+                ->andWhere('t.id IN (:tags)')
+                ->setParameter('tags', $formData['tags']);
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }
