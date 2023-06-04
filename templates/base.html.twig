@@ -15,10 +15,20 @@
     </head>
     <body>
         {% block body %}
-            <h1 class="text-3xl font-bold underline">
-                Hello world!
-            </h1>
+             <nav>
+                {% include 'navigation/navigation.html.twig' %} 
+            </nav>
+
+            <div class="content">
+                {% block content %}
+                    <h3>contenu de la page </h3>
+                {% endblock %}
+            </div>
+
+            <footer>
+                <p>© 2023 - un super projet conçu par Maude et Antoine</p>
+            </footer>
+
         {% endblock %}
-            
     </body>
 </html>
