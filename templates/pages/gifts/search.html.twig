@@ -1,0 +1,11 @@
+{% extends 'pages/base.html.twig' %} {% block content %}
+<section>
+    {% form_theme form 'components/form.html.twig' %}
+    {{ form_start(form) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.gender) }}
+    {{ form_row(form.tags) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+</section>
+{% endblock %}

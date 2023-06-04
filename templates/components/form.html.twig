@@ -1,0 +1,41 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block number_widget %}
+    <div class="custom-number-input">
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}
+
+{% block choice_widget_expanded %}
+<fieldset class="flex items-center">
+    {% for child in form %}
+    <div class="block mr-2 last:mr-0 h-[fit-content]">
+        {% set widget_attr = child.vars.attr|merge({'class': (child.vars.attr.class|default('') ~ 'peer hidden')|trim}) %}
+        {{ form_widget(child, {'attr': widget_attr}) }}
+        <label
+          for="{{ child.vars.id }}"
+          class="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500"
+        >
+          <p class="text-sm font-medium">{{ child.vars.label }}</p>
+        </label>
+      </div>
+    {% endfor %}
+</fieldset>
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if placeholder is defined and placeholder is not empty %}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder }}</option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('choice_widget_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled">{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('choice_widget_options') }}
+    </select>
+{% endblock %}
