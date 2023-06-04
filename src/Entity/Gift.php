@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\GiftRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GiftRepository::class)]
@@ -21,7 +22,7 @@ class Gift
     #[ORM\Column(length: 255)]
     private ?string $src = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private ?string $price = null;
 
     #[ORM\Column(length: 255)]
@@ -32,6 +33,9 @@ class Gift
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'gifts')]
     private Collection $tags;
+
+    #[ORM\Column]
+    private ?int $gender = null;
 
     public function __construct()
     {
@@ -123,6 +127,18 @@ class Gift
     public function removeTag(Tag $tag): self
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getGender(): ?int
+    {
+        return $this->gender;
+    }
+
+    public function setGender(int $gender): self
+    {
+        $this->gender = $gender;
 
         return $this;
     }
