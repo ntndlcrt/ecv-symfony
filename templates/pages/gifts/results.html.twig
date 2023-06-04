@@ -1,0 +1,10 @@
+{% extends 'pages/base.html.twig' %} {% block content %}
+<section>
+    <div class="flex flex-col">
+        <h1 class="text-3xl mb-10 font-bold">Résultats de votre recherche :</h1>
+        {% for gift in gifts %}
+        <h2>{{ gift.title }}</h2>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

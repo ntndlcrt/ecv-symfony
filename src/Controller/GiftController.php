@@ -11,9 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class GiftController extends AbstractController
 {
     /**
-     * @Route("/gifts/search", name="gifts_search")
+     * @Route("/gifts", name="gifts_index")
      */
-    public function search(Request $request, GiftRepository $giftRepository)
+    public function index(Request $request, GiftRepository $giftRepository)
     {
         $form = $this->createForm(GiftSuggestionsType::class);
         $form->handleRequest($request);
@@ -23,25 +23,13 @@ class GiftController extends AbstractController
 
             $gifts = $giftRepository->findMatchingGifts($formData);
 
-            return $this->render('gifts/results.html.twig', [
+            return $this->render('pages/gifts/results.html.twig', [
                 'gifts' => $gifts,
             ]);
         }
 
-        return $this->render('gifts/search.html.twig', [
+        return $this->render('pages/gifts/search.html.twig', [
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/gifts", name="gifts_index")
-     */
-    public function index(GiftRepository $giftRepository)
-    {
-        $gifts = $giftRepository->findAll();
-
-        return $this->render('gifts/index.html.twig', [
-            'gifts' => $gifts,
         ]);
     }
 }
