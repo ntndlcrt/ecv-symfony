@@ -47,7 +47,6 @@ class GiftSuggestionsType extends AbstractType
         $resolver->setDefaults([
             // Set the data class for the form to bind to
             'data_class' => GiftSearchDTO::class,
-            'method' => 'GET'
         ]);
     }
 }

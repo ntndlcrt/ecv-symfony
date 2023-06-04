@@ -61,6 +61,6 @@ class GiftRepository extends ServiceEntityRepository
                 ->setParameter('tags', $giftSearchDTO->getTags());
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult() ?? [];
     }
 }
