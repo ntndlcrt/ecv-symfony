@@ -23,12 +23,12 @@ class GiftController extends AbstractController
 
             $gifts = $giftRepository->findMatchingGifts($formData);
 
-            return $this->render('gifts/results.html.twig', [
+            return $this->render('pages/gifts/results.html.twig', [
                 'gifts' => $gifts,
             ]);
         }
 
-        return $this->render('gifts/search.html.twig', [
+        return $this->render('pages/gifts/search.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -40,7 +40,7 @@ class GiftController extends AbstractController
     {
         $gifts = $giftRepository->findAll();
 
-        return $this->render('gifts/index.html.twig', [
+        return $this->render('pages/gifts/index.html.twig', [
             'gifts' => $gifts,
         ]);
     }
