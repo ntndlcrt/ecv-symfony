@@ -19,13 +19,13 @@ class GiftController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            $formData = $form->getData();
 
-            // Sort the gifts based on the form submission
-            $gifts = $giftRepository->findMatchingGifts($data);
+            $gifts = $giftRepository->findMatchingGifts($formData);
 
-            // Redirect to the index page with the sorted gifts
-            return $this->redirectToRoute('gifts_index', ['gifts' => $gifts]);
+            return $this->render('gifts/results.html.twig', [
+                'gifts' => $gifts,
+            ]);
         }
 
         return $this->render('gifts/search.html.twig', [

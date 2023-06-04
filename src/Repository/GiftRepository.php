@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Gift;
+use App\DTO\GiftSearchDTO;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,51 +40,27 @@ class GiftRepository extends ServiceEntityRepository
         }
     }
 
-    //    /**
-    //     * @return Gift[] Returns an array of Gift objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Gift
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
-
-    public function findMatchingGifts(array $formData)
+    public function findMatchingGifts(GiftSearchDTO $giftSearchDTO)
     {
-        $queryBuilder = $this->createQueryBuilder('g')
-            ->andWhere('g.price <= :price')
-            ->setParameter('price', $formData['price'])
-            ->orderBy('g.price', 'ASC');
+        $qb = $this->createQueryBuilder('g');
 
-        if ($formData['gender'] !== 'none') {
-            $queryBuilder
-                ->andWhere('g.gender = :gender')
-                ->setParameter('gender', $formData['gender']);
+        // Add conditions based on the search parameters
+        if ($giftSearchDTO->getPrice()) {
+            $qb->andWhere('g.price <= :price')
+                ->setParameter('price', $giftSearchDTO->getPrice());
         }
 
-        if (!empty($formData['tags'])) {
-            $queryBuilder
-                ->join('g.tags', 't')
+        if ($giftSearchDTO->getGender()) {
+            $qb->andWhere('g.gender = :gender')
+                ->setParameter('gender', $giftSearchDTO->getGender());
+        }
+
+        if ($giftSearchDTO->getTags()) {
+            $qb->join('g.tags', 't')
                 ->andWhere('t.id IN (:tags)')
-                ->setParameter('tags', $formData['tags']);
+                ->setParameter('tags', $giftSearchDTO->getTags());
         }
 
-        return $queryBuilder->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 }
