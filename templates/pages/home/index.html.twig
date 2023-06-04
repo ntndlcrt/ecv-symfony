@@ -1,0 +1,17 @@
+{% extends 'pages/base.html.twig' %} {% block content %}
+<section class="grid grid-cols-5">
+    <div class="col-span-3 col-start-2 text-center flex flex-col items-center">
+        <span class="text-5xl font-black mb-6">Bienvenue sur Yourkdo !</span>
+        <p class="text-xl w-2/3 mb-12">
+            Marre de chercher pendant des heures le cadeau parfait à chaque
+            anniversaire, mariage, noël etc. ? Nous avons la solution ! Votre
+            cadeau idéal en quelques clics ! 🎁
+        </p>
+        <a
+            href="{{ path('gifts_index') }}"
+            class="rounded-lg bg-blue-600 hover:bg-blue-700 px-5 py-2 text-md font-medium text-white"
+            >Chercher un cadeau</a
+        >
+    </div>
+</section>
+{% endblock %}
