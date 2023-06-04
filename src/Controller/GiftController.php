@@ -23,7 +23,6 @@ class GiftController extends AbstractController
 
             // Sort the gifts based on the form submission
             $gifts = $giftRepository->findMatchingGifts($data);
-            // Adjust the above line to use the appropriate sorting logic based on your requirements
 
             // Redirect to the index page with the sorted gifts
             return $this->redirectToRoute('gifts_index', ['gifts' => $gifts]);
@@ -37,9 +36,9 @@ class GiftController extends AbstractController
     /**
      * @Route("/gifts", name="gifts_index")
      */
-    public function index(Request $request)
+    public function index(GiftRepository $giftRepository)
     {
-        $gifts = $request->query->get('gifts', []);
+        $gifts = $giftRepository->findAll();
 
         return $this->render('gifts/index.html.twig', [
             'gifts' => $gifts,

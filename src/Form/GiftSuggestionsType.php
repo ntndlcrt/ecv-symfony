@@ -22,9 +22,8 @@ class GiftSuggestionsType extends AbstractType
             ])
             ->add('gender', ChoiceType::class, [
                 'choices' => [
-                    'Male' => 'male',
-                    'Female' => 'female',
-                    'None' => 'none',
+                    'Male' => '0',
+                    'Female' => '1',
                 ],
                 // options for the gender field
             ])
